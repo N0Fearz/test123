@@ -41,7 +41,31 @@ class VerkoopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = new Customer();
+        $customer->company_name = $request->input('companyname');
+        $customer->contact_name = $request->input('contactperson');
+        $customer->phone = $request->input('phone');
+        $customer->email = $request->input('email');
+        $customer->save();
+        
+        $order = new Order();
+        $order->customer_id = $customer->id;
+        $order->rounded = false;
+        $order->save();
+
+        return redirect()->route('verkoper_index');
+    }
+
+    public function store_rule(Request $request)
+    {
+        $order_rule = new OrderRules();
+        $order_rule->order_id = $request->input('ordernumber');
+        $order_rule->article_id = $request->input('article');
+        $order_rule->unit_id = $request->input('unit');
+        $order_rule->aantal = $request->input('number');
+        $order_rule->save();
+
+        return redirect()->route('verkoper_index');
     }
 
     /**
@@ -77,7 +101,29 @@ class VerkoopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        // dd($order->customer->company_name);
+
+        $order->customer->company_name = $request->input('companyname');
+        $order->customer->contact_name = $request->input('contact');
+        $order->customer->phone = $request->input('phone');
+        $order->customer->email = $request->input('email');
+
+        $order->customer->save();
+        return redirect()->route('verkoper_index');
+    }
+
+    public function update_rule(Request $request, $id)
+    {
+        $order_rule = OrderRules::find($id);
+        // dd($order->customer->company_name);
+
+        $order_rule->article_id = $request->input('article');
+        $order_rule->unit_id = $request->input('unit');
+        $order_rule->aantal = $request->input('number');
+
+        $order_rule->save();
+        return redirect()->route('verkoper_index');
     }
 
     /**
@@ -88,7 +134,8 @@ class VerkoopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        OrderRules::find($id)->delete();
+        return redirect()->route('verkoper_index');
     }
 
     public function add_order()
@@ -98,16 +145,30 @@ class VerkoopController extends Controller
 
     public function edit_rule($id)
     {
-        $order = OrderRules::find($id);
+        $order_rule = OrderRules::where('order_id', $id)->firstOrFail();
+        $order = Order::find($id);
         $articles = Article::all();
         $units = Unit::all();
-        return view('verkoper.edit_rule', ['order'=>$order, 'articles'=>$articles, 'units'=>$units]);
+        return view('verkoper.edit_rule', ['order'=>$order, 'articles'=>$articles, 'units'=>$units, 'order_rule'=>$order_rule]);
     }
 
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function add_rule($id)
     {
+        $orderid = $id;
         $articles = Article::all();
         $units = Unit::all();
-        return view('verkoper.add_rule', ['articles'=>$articles, 'units'=>$units]);
+        return view('verkoper.add_rule', ['articles'=>$articles, 'units'=>$units, 'orderid'=>$id]);
+    }
+
+    public function edit_order($id)
+    {
+        $order = Order::find($id);
+        return view('verkoper.edit_order', ['order'=>$order]);
     }
 }

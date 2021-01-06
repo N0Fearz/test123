@@ -7,7 +7,8 @@
     <div class="grid py-12 place-items-center">
         <div class="w-11/12 p-12 bg-white sm:w-8/12 md:w-1/2 lg:w-5/12">
             <h1 class="text-xl font-semibold">Bestelling toevoegen</h1>
-            <form class="mt-6">
+            <form class="mt-6" method="POST" action="{{route('store_order')}}">
+                @csrf
                 <div class="flex justify-between gap-3">
                     <span class="w-1/2">
                         <label for="companyname"
@@ -43,10 +44,9 @@
                     </span>
 
                 </div>
-                <button type="submit"
-                    class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-                    toevoegen
-                </button>
+                <input type="submit"
+                    class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none"
+                    value="toevoegen">
             </form>
         </div>
     </div>

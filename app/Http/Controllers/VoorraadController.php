@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Article;
+use App\Models\Stock;
 
 class VoorraadController extends Controller
 {
@@ -13,7 +15,9 @@ class VoorraadController extends Controller
      */
     public function index()
     {
-        return view('voorraadmanager');
+
+        $articles = Article::all();
+        return view('voorraad.voorraad', ['articles'=>$articles]);
     }
 
     /**
@@ -45,7 +49,8 @@ class VoorraadController extends Controller
      */
     public function show($id)
     {
-        //
+        $article = Article::find($id);
+        return view('voorraad.edit_location', ['article'=>$article]);
     }
 
     /**
@@ -68,7 +73,17 @@ class VoorraadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::find($id);
+        $article->stock->location = $request->input('location');
+        $article->stock->save();
+        return redirect()->route('voorraadmanager_index');
+    }
+    public function update_number(Request $request, $id)
+    {
+        $stock = Stock::find($id);
+        $stock->increment('number', $request->input('number'));
+        $stock->save();
+        return redirect()->route('voorraadmanager_index');
     }
 
     /**

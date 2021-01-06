@@ -23,7 +23,7 @@
                 <div class="flex justify-between">
                     <a href="{{ route('add_rule', $order->id) }}"
                         class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded w-1/4 justify-center text-center">Regel
-                        toevoegen</a> <a href="{{ route('add_rule') }}"
+                        toevoegen</a> <a href="{{ route('edit_order', $order->id) }}"
                         class=" bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded w-1/4 justify-center text-center">Bestelling
                         bewerken</a>
                     <div class="flex-end border rounded w-1/4 px-2 lg:px-6 h-12 bg-transparent">
@@ -72,47 +72,47 @@
                     </thead>
                     <tbody class="bg-white">
                         @foreach ($order->orderrules as $order_rule)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                    <div class="flex items-center">
-                                        <div>
-                                            <div class="text-sm leading-5 text-gray-800">
-                                                {{ $order_rule->order_id }}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                                <div class="flex items-center">
+                                    <div>
+                                        <div class="text-sm leading-5 text-gray-800">
+                                            {{ $order_rule->article->artikelnummer }}
 
-                                            </div>
                                         </div>
                                     </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
-                                    <div class="text-sm leading-5 text-blue-900">
-                                        {{ $order_rule->aantal }}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                                <div class="text-sm leading-5 text-blue-900">
+                                    {{ $order_rule->aantal }}
 
-                                    </div>
-                                </td>
-                                <td
-                                    class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                    {{ $order_rule->unit->unit_name }}
-
-
-                                </td>
-                                <td
-                                    class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                    {{ $order_rule->article->stock->location }}
+                                </div>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                {{ $order_rule->unit->unit_name }}
 
 
-                                </td>
-                                <td id="btnCheck"
-                                    class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
-                                    <a href="{{ route('edit_order', $order_rule->id) }}"
-                                        class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded">
-                                        Bewerken
-                                    </a>
-                                    <a
-                                        class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded">
-                                        Verwijderen
-                                    </a>
-                                </td>
-                            </tr>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                {{ $order_rule->article->stock->location }}
+
+
+                            </td>
+                            <td id="btnCheck"
+                                class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
+                                <a href="{{ route('edit_rule', $order_rule->id) }}"
+                                    class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded">
+                                    Bewerken
+                                </a>
+                                <a href="{{ route('delete_rule', $order_rule->id) }}"
+                                    class="bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-grey py-2 px-4 border border-blue rounded">
+                                    Verwijderen
+                                </a>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>

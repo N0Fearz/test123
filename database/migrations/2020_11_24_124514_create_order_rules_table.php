@@ -15,9 +15,9 @@ class CreateOrderRulesTable extends Migration
     {
         Schema::create('order_rules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('article_id')->constrained('articles');
-            $table->foreignId('unit_id')->constrained('units');
+            $table->foreignId('order_id');
+            $table->foreignId('article_id');
+            $table->foreignId('unit_id');
             $table->integer('aantal');
             $table->timestamps();
         });

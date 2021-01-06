@@ -13,13 +13,13 @@ class RedirectController extends Controller
 
 switch ($role) {
     case 1:
-        return redirect('/picker');
+        return redirect()->route('picker_index');
         break;
     case 2:
-        return redirect('/verkoper');
+        return redirect()->route('verkoper_index');
         break;
     case 3:
-        return redirect('/voorraadmanager');
+        return redirect()->route('voorraadmanager_index');
         break;
 }
     }

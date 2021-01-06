@@ -15,7 +15,7 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('stock_id')->constrained('stock');
+            $table->foreignId('stock_id');
             $table->string('artikelnummer');
             $table->string('description', 255);
             $table->decimal('price', 15, 2);
